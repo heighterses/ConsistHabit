@@ -17,25 +17,28 @@ struct DashboardView: View {
                 AppTheme.BackgroundColor.primary.ignoresSafeArea()
 
                 if let session = store.userSession {
-                    VStack(spacing: 0) {
-                        headerSection(session)
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            headerSection(session)
 
-                        statsRow(session)
-                            .padding(.horizontal, AppTheme.Spacing.lg)
-                            .padding(.vertical, AppTheme.Spacing.md)
+                            statsRow(session)
+                                .padding(.horizontal, AppTheme.Spacing.lg)
+                                .padding(.vertical, AppTheme.Spacing.md)
 
-                        if !session.activeHabits.isEmpty {
-                            ConsistencyMatrixView(habits: session.activeHabits)
-                                .padding(AppTheme.Spacing.lg)
-                        }
+                            if !session.activeHabits.isEmpty {
+                                ConsistencyMatrixView(habits: session.activeHabits)
+                                    .padding(AppTheme.Spacing.lg)
+                            }
 
-                        HabitListView(habits: session.activeHabits)
+                            HabitListView(habits: session.activeHabits)
 
-                        Spacer()
+                            if session.activeHabits.count >= session.totalFreeSlots && !session.isPremium {
+                                capacityBanner(session)
+                                    .padding(AppTheme.Spacing.lg)
+                            }
 
-                        if session.activeHabits.count >= session.totalFreeSlots && !session.isPremium {
-                            capacityBanner(session)
-                                .padding(AppTheme.Spacing.lg)
+                            Spacer()
+                                .frame(height: AppTheme.Spacing.xxxl)
                         }
                     }
 
