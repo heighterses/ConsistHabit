@@ -33,3 +33,4 @@ final class ConsistHabitUITestsLaunchTests: XCTestCase {
         add(attachment)
     }
 }
+
