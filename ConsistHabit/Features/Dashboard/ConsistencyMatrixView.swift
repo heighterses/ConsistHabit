@@ -80,37 +80,14 @@ struct ConsistencyMatrixView: View {
 
     private func matrixWeekView(_ week: MatrixWeek, id: UUID) -> some View {
         VStack(spacing: AppTheme.Spacing.xs) {
-            if let monthLabel = week.monthLabel {
-                Text(monthLabel)
-                    .font(AppTheme.Typography.labelSmall)
-                    .foregroundColor(AppTheme.TextColor.secondary)
-                    .frame(height: 16)
-            } else {
-                Color.clear.frame(height: 16)
-            }
-
-            VStack(spacing: AppTheme.Spacing.sm) {
-                ForEach(["M", "W", "F", "S"], id: \.self) { day in
-                    Text(day)
-                        .font(AppTheme.Typography.labelSmall)
-                        .foregroundColor(AppTheme.TextColor.tertiary)
-                        .frame(width: 12, height: 12)
-                }
-            }
-            .frame(width: 12)
-
-            HStack(spacing: AppTheme.Spacing.sm) {
-                VStack(spacing: AppTheme.Spacing.xs) {
-                    ForEach(0..<7, id: \.self) { dayIndex in
-                        if dayIndex < week.days.count {
-                            MatrixTileView(day: week.days[dayIndex], isSelected: selectedDay?.date == week.days[dayIndex].date)
-                                .onTapGesture {
-                                    withAnimation(AppTheme.Animation.springSnappy) {
-                                        selectedDay = week.days[dayIndex]
-                                    }
-                                }
+            ForEach(0..<7, id: \.self) { dayIndex in
+                if dayIndex < week.days.count {
+                    MatrixTileView(day: week.days[dayIndex], isSelected: selectedDay?.date == week.days[dayIndex].date)
+                        .onTapGesture {
+                            withAnimation(AppTheme.Animation.springSnappy) {
+                                selectedDay = week.days[dayIndex]
+                            }
                         }
-                    }
                 }
             }
         }
